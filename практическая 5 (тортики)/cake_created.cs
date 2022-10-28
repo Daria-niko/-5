@@ -5,8 +5,8 @@ namespace практическая_5__тортики_
 {
     internal class cake_created
     {
-
-        
+        private int cost;
+        private string zakaz;
 
         public void Menu()
         {
@@ -21,8 +21,8 @@ namespace практическая_5__тортики_
             Console.WriteLine("  Декор");
             Console.WriteLine("  Заказ завершен");
             Console.WriteLine("======================");
-            Console.WriteLine("Цена: " + Program.cost);
-            Console.WriteLine("Ваш заказ: " + Program.zakaz);
+            Console.WriteLine("Цена: " + cost);
+            Console.WriteLine("Ваш заказ: " + zakaz);
         }
 
         public List<PodMenu> Forma()
@@ -152,10 +152,15 @@ namespace практическая_5__тортики_
                     Console.WriteLine("  " + podmenu.title + " - " + podmenu.price);
                 }
                 position = Arrow(position, key);
-                if(key == ConsoleKey.Enter)
+                if (key == ConsoleKey.Enter)
                 {
-
-                    return;
+                    cost = cost + box[position].price;
+                    zakaz = zakaz + box[position].title;
+                    break;
+                }
+                if (key == ConsoleKey.Escape)
+                {
+                    Menu();
                 }
             }
         }
@@ -165,17 +170,29 @@ namespace практическая_5__тортики_
             {
                 case ConsoleKey.DownArrow:
                     position++;
-                   
+
                     break;
                 case ConsoleKey.UpArrow:
                     position--;
                     break;
             }
-            
+
 
             Console.SetCursorPosition(0, position);
             Console.WriteLine("->");
             return position;
+        }
+
+        public void ClearOrder()
+        {
+            zakaz = "";
+            cost = 0;
+        }
+
+        public void Save()
+        {
+            File.AppendAllText("C:\\Users\\Дарья\\source\\repos\\практическая 5 (тортики)\\cake_story.txt", cost.ToString());
+            File.AppendAllText("C:\\Users\\Дарья\\source\\repos\\практическая 5 (тортики)\\cake_story.txt", zakaz.ToString());
         }
 
     }
